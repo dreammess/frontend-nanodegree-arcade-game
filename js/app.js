@@ -24,6 +24,7 @@ Enemy.prototype.update = function(dt) {
 
     // Collision
     if(this.x < player.x + 30 && this.x + 60 > player.x && this.y < player.y + 60 && this.y + 40 > player.y) {
+        player.score -= 5;
         player.reset();
     }
 };
@@ -40,6 +41,7 @@ var Player = function() {
     this.x = 217;
     this.y = 430;
     this.speed = 15;
+    this.score = 10;
     this.sprite = 'images/char-cat-girl.png';
 };
 
@@ -47,6 +49,7 @@ Player.prototype.update = function(dt) {
 
     // reaches water = reset:
     if(this.y < 0 || this.y > 450 || this.x < -25 || this.x > 450) {
+        this.score += 50;
         this.reset();
     }
 
@@ -69,6 +72,9 @@ Player.prototype.reset = function() {
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+
+
 
 Player.prototype.handleInput = function(direction) {
     if (direction === 'left') {

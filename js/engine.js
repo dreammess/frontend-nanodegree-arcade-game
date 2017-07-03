@@ -136,8 +136,34 @@ var Engine = (function(global) {
             }
         }
 
-        renderEntities();
+        ctx.font = "bold 18px Courier New";
+        ctx.fillStyle = "white";
+        ctx.fill();
+        ctx.fillText("Score:"+ player.score, 350, 80);
+
+        if (player.score <= 0 ) {
+            gameOverDisplay();
+        } else {
+            renderEntities();
+        }
     }
+
+    function gameDisplay(outcome, color) {
+        ctx.fillStyle = color;
+        ctx.font = "bold 80px Courier New";
+        ctx.textAlign = "center";
+        ctx.fillText(outcome, canvas.width / 2, canvas.height / 2 + 20);
+      }
+
+    function gameOverDisplay() {
+        gameDisplay('Game Over', 'red')
+
+      }
+
+    function gameWonDisplay() {
+        gameDisplay('You won!', 'yellow')
+      }
+
 
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
@@ -182,3 +208,5 @@ var Engine = (function(global) {
      */
     global.ctx = ctx;
 })(this);
+
+
