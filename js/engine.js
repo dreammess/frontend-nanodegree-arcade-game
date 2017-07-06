@@ -135,15 +135,31 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
+        //SCORE display
         ctx.font = "bold 18px Courier New";
         ctx.fillStyle = "white";
         ctx.fill();
-        ctx.fillText("Score:"+ player.score, 350, 80);
+        ctx.fillText("Score:" + player.score, 405, 70);
 
-        if (player.score <= 0 ) {
+        //LIVES display
+        ctx.font = "bold 18px Courier New";
+        ctx.fillStyle = "white";
+        ctx.fill();
+        ctx.fillText("Lives:"+ player.lives, 405, 100);
+
+        //LEVEL display
+        ctx.font = "bold 18px Courier New";
+        ctx.fillStyle = "white";
+        ctx.fill();
+        ctx.fillText("Level:"+ player.level, 405, 130);
+
+        //GAME OVER or WON
+        if (player.lives <= 0 || player.score <= 0 ) {
             gameOverDisplay();
-        } else {
+        } else if (player.lives >= 5 || player.score >= 250 || player.level >= 5) {
+            gameWonDisplay();
+        }
+        else {
             renderEntities();
         }
     }
@@ -198,7 +214,9 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/char-cat-girl.png'
+        'images/char-cat-girl.png',
+        'images/Heart.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 

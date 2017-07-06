@@ -23,8 +23,9 @@ Enemy.prototype.update = function(dt) {
     }
 
     // Collision
-    if(this.x < player.x + 30 && this.x + 60 > player.x && this.y < player.y + 60 && this.y + 40 > player.y) {
+    if(this.x < player.x + 25 && this.x + 50 > player.x && this.y < player.y + 50 && this.y + 30 > player.y) {
         player.score -= 5;
+        player.lives -= 1;
         player.reset();
     }
 };
@@ -42,15 +43,25 @@ var Player = function() {
     this.y = 430;
     this.speed = 15;
     this.score = 10;
+    this.lives = 2;
+    this.level = 1;
     this.sprite = 'images/char-cat-girl.png';
 };
 
 Player.prototype.update = function(dt) {
 
+//TODO: refactor reaches water, add levels, decrese speed/level/score when player hits the bug, add gems
+
     // reaches water = reset:
-    if(this.y < 0 || this.y > 450 || this.x < -25 || this.x > 450) {
+    if(this.y < 0) {
         this.score += 50;
+        this.lives += 1;
+        this.level += 1;
         this.reset();
+        allEnemies.forEach(function(enemy) {
+            enemy.speed += 30;
+            this.speed += 20;
+        });
     }
 
     allEnemies.forEach(function(enemy) {
@@ -64,7 +75,6 @@ Player.prototype.update = function(dt) {
 
 //Reset player to beginning position
 Player.prototype.reset = function() {
-    'use strict';
    this.x = 200;
    this.y = 400;
 };
@@ -77,13 +87,13 @@ Player.prototype.render = function() {
 
 
 Player.prototype.handleInput = function(direction) {
-    if (direction === 'left') {
+    if (direction === 'left' && this.x > 0) {
         this.x -= this.speed;
-    } else if(direction === 'right') {
+    } else if(direction === 'right' && this.x < 410) {
         this.x += this.speed;
     } else if(direction === 'up') {
         this.y -= this.speed;
-    } else if(direction === 'down') {
+    } else if(direction === 'down' && this.y < 430) {
         this.y += this.speed;
     }
 };
@@ -94,9 +104,9 @@ Player.prototype.handleInput = function(direction) {
 var player = new Player();
 
 var allEnemies = [];
-var enemy1 = new Enemy(102, 120);
-var enemy2 = new Enemy(202, 150);
-var enemy3 = new Enemy(303, 170);
+var enemy1 = new Enemy(70, 120);
+var enemy2 = new Enemy(200, 150);
+var enemy3 = new Enemy(330, 170);
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
