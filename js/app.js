@@ -63,6 +63,7 @@ Player.prototype.update = function(dt) {
             this.speed += 20;
         });
     }
+};
 
 //Reset player to beginning position
 Player.prototype.reset = function() {
