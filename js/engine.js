@@ -164,6 +164,7 @@ var Engine = (function(global) {
         }
     }
 
+// Following 3 functions display game status messages to the player.
     function gameDisplay(outcome, color) {
         ctx.fillStyle = color;
         ctx.font = "bold 80px Courier New";
@@ -213,10 +214,7 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png',
-        'images/char-cat-girl.png',
-        'images/Heart.png',
-        'images/Star.png'
+        'images/char-cat-girl.png'
     ]);
     Resources.onReady(init);
 

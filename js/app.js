@@ -23,7 +23,8 @@ Enemy.prototype.update = function(dt) {
     }
 
     // Collision
-    if(this.x < player.x + 25 && this.x + 50 > player.x && this.y < player.y + 50 && this.y + 30 > player.y) {
+    // y collision settings are ajusted to give the player more leeway with their head than with their feet.
+    if(this.x < player.x + 25 && this.x + 25 > player.x && this.y < player.y + 50 && this.y + 30 > player.y) {
         player.score -= 5;
         player.lives -= 1;
         player.reset();
@@ -38,6 +39,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+// Initialize player's speed, score, lives and level
 var Player = function() {
     this.x = 217;
     this.y = 430;
@@ -50,9 +52,7 @@ var Player = function() {
 
 Player.prototype.update = function(dt) {
 
-//TODO: refactor reaches water, add levels, decrese speed/level/score when player hits the bug, add gems
-
-    // reaches water = reset:
+    // Handle player reaching water: score, lives and level all increase; Enemy speed increased.
     if(this.y < 0) {
         this.score += 50;
         this.lives += 1;
@@ -64,28 +64,18 @@ Player.prototype.update = function(dt) {
         });
     }
 
-    allEnemies.forEach(function(enemy) {
-    if(self.x >= enemy.x - 25 && self.x <= enemy.x + 25) {
-        if(self.y >= enemy.y - 25 && self.y <= enemy.y + 25) {
-            self.reset();
-            }
-        }
-    });
-};
-
 //Reset player to beginning position
 Player.prototype.reset = function() {
    this.x = 200;
    this.y = 400;
 };
 
+//Draw plazer to screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
-
-
+//Handle input using directional arrows on the keyboard.
 Player.prototype.handleInput = function(direction) {
     if (direction === 'left' && this.x > 0) {
         this.x -= this.speed;
